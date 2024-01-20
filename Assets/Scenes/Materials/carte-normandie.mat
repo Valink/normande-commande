@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: red
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: carte-normandie
+  m_Shader: {fileID: 4800000, guid: 16516895e8a79bf49a6562c3c3b84cbf, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 04879f404558e6f4794dd0d68b539454, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -59,12 +59,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ShoreTex:
+        m_Texture: {fileID: 2800000, guid: 5fbcffe9c2077f04186883cb39275fcc, type: 3}
+        m_Scale: {x: 0, y: 0}
+        m_Offset: {x: 1, y: 1}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _Distance: 1
+    - _DistortionForce: 1
+    - _DistortionNoiseScale: 10
+    - _DistortionSpeed: 1
     - _DstBlend: 0
+    - _FoamAmount: 1
+    - _FoamCutoff: 0.5
+    - _FoamNoiseScale: 10
+    - _FoamNoiseSpeed: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -72,12 +88,29 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Shininess: 17.1
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
+    - _SparkleIntensity: 5
+    - _SparkleSmoothing: 0.1
+    - _SparkleTreshold: 0.68
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
+    - _ViewAngleSparkleReduction: 0.95
     - _ZWrite: 1
+    - __dirty: 1
+    - _isInnerAlphaBlendOrColor: 0
     m_Colors:
-    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0.3647059, g: 0.7490196, b: 0.7372549, a: 0.5}
+    - _BumpDirection: {r: 30, g: 30, b: 30, a: -50}
+    - _BumpTiling: {r: 0.01, g: 0.01, b: 0.01, a: 0.01}
+    - _Color: {r: 0.89433956, g: 0.6249409, b: 0.26830178, a: 1}
+    - _DeepColor: {r: 0, g: 0.2661768, b: 0.490566, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Foam: {r: 1.03, g: 2.68, b: 0, a: 0}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InvFadeParemeter: {r: 0.67, g: 17, b: 27.3, a: 9.18}
+    - _ShallowColor: {r: 0, g: 0.777024, b: 1, a: 0.3568628}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
