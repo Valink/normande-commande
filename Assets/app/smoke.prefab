@@ -9523,7 +9523,7 @@ GameObject:
   - component: {fileID: 4265111139750279076}
   - component: {fileID: 1219760273819593005}
   m_Layer: 0
-  m_Name: Explosion single soft
+  m_Name: smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

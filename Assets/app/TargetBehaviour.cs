@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TargetBehaviour : MonoBehaviour
@@ -14,17 +11,12 @@ public class TargetBehaviour : MonoBehaviour
         currentHealth = maxHealth; // Au début, les points de vie sont au maximum
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // Vous pouvez ajouter du code de mise à jour ici si nécessaire
-    }
-
     // Méthode pour infliger des dégâts à la cible
-    public void TakeDamage(int damageAmount, RaycastHit hit)
+    public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount; // Réduire les points de vie en fonction des dégâts reçus
         Debug.Log(currentHealth);
+
         // Vérifier si la cible est éliminée
         if (currentHealth <= 0)
         {

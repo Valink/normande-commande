@@ -1,29 +1,18 @@
-using System.Collections;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 public class CanonBehaviour : MonoBehaviour
 {
     public Transform target; // Référence vers la cible (cube)
     public GameObject smokePrefab;
-    public GameObject ballPrefab;  
-    public GameObject explosionPrefab; 
-    public Transform smokesContainer; 
-    public Transform ballsContainer; 
-    public Transform explosionsContainer; 
+    public GameObject ballPrefab;
+    public GameObject explosionPrefab;
+    public Transform smokesContainer;
+    public Transform ballsContainer;
+    public Transform explosionsContainer;
     public bool shoot;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
     async void Update()
     {
-        
         // Voir la trajectoire
         Debug.DrawRay(transform.position, transform.forward * 15, Color.red);
 
@@ -39,7 +28,8 @@ public class CanonBehaviour : MonoBehaviour
             transform.rotation = rotationToTarget;
         }
 
-        if(shoot){
+        if (shoot)
+        {
             Instantiate(smokePrefab, smokesContainer);
             Instantiate(ballPrefab, ballsContainer);
 
@@ -51,16 +41,13 @@ public class CanonBehaviour : MonoBehaviour
                 explosion.transform.position = hit.transform.position;
 
                 // Obtenez le composant TargetBehaviour de l'objet touché
-                TargetBehaviour target = hit.transform.GetComponentInParent<TargetBehaviour>();
+                var target = hit.transform.GetComponentInParent<TargetBehaviour>();
 
-                Debug.Log(target);
-                Debug.Log(hit.transform.gameObject);
-
-                if (target != null)
+                if (target)
                 {
                     // Infliger un tiers des dégâts à la cible
                     int damageAmount = +35;
-                    target.TakeDamage(damageAmount, hit);
+                    target.TakeDamage(damageAmount);
                 }
             }
 
