@@ -44,7 +44,7 @@ public class CanonBehaviour : MonoBehaviour
             var explosion = Instantiate(explosionPrefab, explosionsContainer);
             explosion.transform.position = hit.transform.position;
 
-            var target = hit.transform.GetComponentInParent<TargetBehaviour>();
+            var target = hit.transform.GetComponentInParent<HealthManager>();
 
             if (target)
             {

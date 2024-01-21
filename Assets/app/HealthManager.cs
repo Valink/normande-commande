@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TargetBehaviour : MonoBehaviour
+public class HealthManager : MonoBehaviour
 {
     public int maxHealth = 100;
     private int currentHealth;
@@ -17,13 +17,6 @@ public class TargetBehaviour : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
-
-        if (currentHealth <= 0)
-        {
-            GetComponent<Collider>().enabled = false;
-            GetComponent<NavMeshAgent>().enabled = false;
-            Destroy(gameObject, 3f);
-        }
 
         onHealthChange?.Invoke((float)currentHealth / maxHealth);
     }
