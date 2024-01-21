@@ -3,17 +3,17 @@ using UnityEngine.UI;
 
 public class HealthBarControllerBehaviours : MonoBehaviour
 {
-    public TargetBehaviour targetBehaviour;
+    public HealthManager healthManager;
     public Image healthBarFiller;
 
     public void OnEnable()
     {
-        targetBehaviour.onHealthChange += UpdateHealthBar;
+        healthManager.onHealthChange += UpdateHealthBar;
     }
 
     public void OnDisable()
     {
-        targetBehaviour.onHealthChange -= UpdateHealthBar;
+        healthManager.onHealthChange -= UpdateHealthBar;
     }
 
     public void UpdateHealthBar(float healthBetween0And1)
