@@ -1,17 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
 {
     [SerializeField] private List<IslandBehaviour> islands;
 
-    private IslandBehaviour destinationIsland;
+    [SerializeField] private EnemyBehaviour[] enemyBehaviours;
 
-    public int CamenbertCount;
+    [SerializeField] private IslandBehaviour destinationIsland;
+    public int camenbertCount;
 
-    public delegate void OnDelivery(DeliveryManager deliveryManager);
+    public delegate void OnDelivery(int camenbertCount);
     public event OnDelivery onDelivery;
 
     public delegate void OnNewDestination(IslandBehaviour island);
@@ -19,30 +18,7 @@ public class DeliveryManager : MonoBehaviour
 
     public void Awake()
     {
-        ChooseIsland();
-    }
-    public void ChooseIsland()
-    {
-        if (destinationIsland != null)
-        {
-            List<IslandBehaviour> islandsWithoutDestination = new List<IslandBehaviour>(islands);
-            islandsWithoutDestination.Remove(destinationIsland);
-            destinationIsland = islandsWithoutDestination[Random.Range(0, islandsWithoutDestination.Count)];
-        }
-        else
-        {
-            destinationIsland = islands[Random.Range(0, islands.Count)];
-        }
-
-        ChoiceNumberOfCamenbert();
-
-        onNewDestination?.Invoke(destinationIsland);
-    }
-
-    private void ChoiceNumberOfCamenbert()
-    {
-        CamenbertCount = Random.Range(1, 5);
-        Debug.Log($"ChoiceNumberOfCamenbert: {CamenbertCount}");
+        ChooseIsland(); // TODO gameManager should call this
     }
 
     public void OnEnable()
@@ -61,12 +37,48 @@ public class DeliveryManager : MonoBehaviour
         }
     }
 
+    public void ChooseIsland()
+    {
+        if (destinationIsland != null)
+        {
+            var islandsWithoutDestination = new List<IslandBehaviour>(islands);
+            islandsWithoutDestination.Remove(destinationIsland);
+            destinationIsland = PickARandomIslandIn(islandsWithoutDestination);
+        }
+        else
+        {
+            destinationIsland = PickARandomIslandIn(islands);
+        }
+
+        PickRandomNumberOfCamenbert();
+        SetEnemiesDestination();
+
+        onNewDestination?.Invoke(destinationIsland);
+    }
+
+    private void SetEnemiesDestination()
+    {
+        foreach (var enemyBehaviour in enemyBehaviours)
+        {
+            enemyBehaviour.SetDestination(destinationIsland.transform.position);
+        }
+    }
+
+    private IslandBehaviour PickARandomIslandIn(List<IslandBehaviour> islands)
+    {
+        return this.islands[Random.Range(0, this.islands.Count)];
+    }
+
+    private void PickRandomNumberOfCamenbert()
+    {
+        camenbertCount = Random.Range(100, 500);
+    }
+
     private void CheckIfIslandIsDestinationOne(IslandBehaviour island)
     {
         if (island == destinationIsland)
         {
-            Debug.Log($"Bravo ! Tu as livré à {island.cityName}");
-            onDelivery?.Invoke(this);
+            onDelivery?.Invoke(camenbertCount);
             ChooseIsland();
         }
     }

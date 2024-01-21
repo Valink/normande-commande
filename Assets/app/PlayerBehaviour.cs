@@ -22,6 +22,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
+        // TODO improve movement system
         var moveInput = move.action.ReadValue<Vector2>();
         rb.AddTorque(new Vector3(0, moveInput.x, 0) * turnSpeed);
         rb.AddForce(forwardSpeed * moveInput.y * transform.forward);
@@ -29,6 +30,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Attack()
     {
+        // TODO
         Debug.Log("Attack");
     }
 }

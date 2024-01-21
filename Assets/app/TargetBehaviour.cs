@@ -1,11 +1,13 @@
-using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TargetBehaviour : MonoBehaviour
 {
     public int maxHealth = 100;
     private int currentHealth;
-    public HealthBarControllerBehaviours healthBar;
+
+    public delegate void OnHealthChange(float healthBetween0And1);
+    public event OnHealthChange onHealthChange;
 
     void Start()
     {
@@ -15,14 +17,14 @@ public class TargetBehaviour : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
-        Debug.Log(currentHealth);
-
-        healthBar.UpdateHealthBar(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {
-            gameObject.GetComponent<Collider>().enabled = false;
-            Destroy(gameObject, 1f);
+            GetComponent<Collider>().enabled = false;
+            GetComponent<NavMeshAgent>().enabled = false;
+            Destroy(gameObject, 3f);
         }
+
+        onHealthChange?.Invoke((float)currentHealth / maxHealth);
     }
 }

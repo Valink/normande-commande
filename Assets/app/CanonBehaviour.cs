@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class CanonBehaviour : MonoBehaviour
 {
-    public Transform target; // Référence vers la cible (cube)
+    [SerializeField] private int reach = 100;
+    [SerializeField] private int damage = 35;
+    public Transform target;
     public GameObject smokePrefab;
     public GameObject ballPrefab;
     public GameObject explosionPrefab;
@@ -11,47 +13,43 @@ public class CanonBehaviour : MonoBehaviour
     public Transform explosionsContainer;
     public bool shoot;
 
-    async void Update()
+    void Update()
     {
-        // Voir la trajectoire
-        Debug.DrawRay(transform.position, transform.forward * 15, Color.red);
-
-        if (target != null)
+        if (target)
         {
-            // Calcul de la direction vers la cible
-            Vector3 directionToTarget = target.position - transform.position;
-
-            // Calcul de la rotation pour faire face à la cible
-            Quaternion rotationToTarget = Quaternion.LookRotation(directionToTarget);
-
-            // Appliquer la rotation au canon
-            transform.rotation = rotationToTarget;
+            LookAtTarget();
         }
 
         if (shoot)
         {
-            Instantiate(smokePrefab, smokesContainer);
-            Instantiate(ballPrefab, ballsContainer);
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-            {
-                var explosion = Instantiate(explosionPrefab, explosionsContainer);
-                explosion.transform.position = hit.transform.position;
-
-                // Obtenez le composant TargetBehaviour de l'objet touché
-                var target = hit.transform.GetComponentInParent<TargetBehaviour>();
-
-                if (target)
-                {
-                    // Infliger un tiers des dégâts à la cible
-                    int damageAmount = +35;
-                    target.TakeDamage(damageAmount);
-                }
-            }
-
+            Shoot();
             shoot = false;
+        }
+    }
+
+    private void LookAtTarget()
+    {
+        var directionToTarget = target.position - transform.position;
+        var rotationToTarget = Quaternion.LookRotation(directionToTarget);
+        transform.rotation = rotationToTarget;
+    }
+
+    private void Shoot()
+    {
+        Instantiate(smokePrefab, smokesContainer);
+        Instantiate(ballPrefab, ballsContainer);
+
+        if (Physics.Raycast(transform.position, transform.forward, out var hit, reach))
+        {
+            var explosion = Instantiate(explosionPrefab, explosionsContainer);
+            explosion.transform.position = hit.transform.position;
+
+            var target = hit.transform.GetComponentInParent<TargetBehaviour>();
+
+            if (target)
+            {
+                target.TakeDamage(damage);
+            }
         }
     }
 }

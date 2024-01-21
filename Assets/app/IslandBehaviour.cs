@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEngine.Events;
+using TMPro;
 
 public class IslandBehaviour : MonoBehaviour
 {
     [SerializeField] public string cityName;
-    [SerializeField] private TMPro.TextMeshProUGUI cityNameText;
+    [SerializeField] private TextMeshProUGUI cityNameText;
 
     public delegate void OnBoatEnter(IslandBehaviour island);
     public event OnBoatEnter onBoatEnter;
