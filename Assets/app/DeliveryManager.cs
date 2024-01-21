@@ -9,6 +9,12 @@ public class DeliveryManager : MonoBehaviour
 
     private IslandBehaviour destinationIsland;
 
+    public int CamenbertCount;
+
+    public delegate void OnDelivery(DeliveryManager deliveryManager);
+    public event OnDelivery onDelivery;
+
+
     public void Awake()
     {
         ChoiceIsland();
@@ -28,6 +34,13 @@ public class DeliveryManager : MonoBehaviour
             destinationIsland = islands[Random.Range(0, islands.Count)];
             Debug.Log($"ChoiceIsland: {destinationIsland.cityName}");
         }
+        ChoiceNumberOfCamenbert();
+    }
+
+    private void ChoiceNumberOfCamenbert()
+    {
+        CamenbertCount = Random.Range(1, 5);
+        Debug.Log($"ChoiceNumberOfCamenbert: {CamenbertCount}");
     }
 
     public void OnEnable()
@@ -51,6 +64,7 @@ public class DeliveryManager : MonoBehaviour
         if (island == destinationIsland)
         {
             Debug.Log($"Bravo ! Tu as livré à {island.cityName}");
+            onDelivery?.Invoke(this);
             ChoiceIsland();
         }
     }
