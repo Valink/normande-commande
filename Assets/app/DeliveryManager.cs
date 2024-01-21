@@ -9,25 +9,27 @@ public class DeliveryManager : MonoBehaviour
 
     private IslandBehaviour destinationIsland;
 
+    public delegate void OnNewDestination(IslandBehaviour island);
+    public event OnNewDestination onNewDestination;
+
     public void Awake()
     {
-        ChoiceIsland();
+        ChooseIsland();
     }
-    public void ChoiceIsland()
+    public void ChooseIsland()
     {
         if (destinationIsland != null)
         {
             List<IslandBehaviour> islandsWithoutDestination = new List<IslandBehaviour>(islands);
-
             islandsWithoutDestination.Remove(destinationIsland);
             destinationIsland = islandsWithoutDestination[Random.Range(0, islandsWithoutDestination.Count)];
-            Debug.Log($"ChoiceIsland: {destinationIsland.cityName}");
         }
         else
         {
             destinationIsland = islands[Random.Range(0, islands.Count)];
-            Debug.Log($"ChoiceIsland: {destinationIsland.cityName}");
         }
+
+        onNewDestination?.Invoke(destinationIsland);
     }
 
     public void OnEnable()
@@ -51,7 +53,7 @@ public class DeliveryManager : MonoBehaviour
         if (island == destinationIsland)
         {
             Debug.Log($"Bravo ! Tu as livré à {island.cityName}");
-            ChoiceIsland();
+            ChooseIsland();
         }
     }
 }
