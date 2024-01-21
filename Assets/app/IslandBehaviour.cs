@@ -6,7 +6,7 @@ public class IslandBehaviour : MonoBehaviour
     [SerializeField] public string cityName;
     [SerializeField] private TextMeshProUGUI cityNameText;
 
-    public delegate void OnBoatEnter(IslandBehaviour island);
+    public delegate void OnBoatEnter(IslandBehaviour island, GameObject other);
     public event OnBoatEnter onBoatEnter;
 
     public void Awake()
@@ -16,6 +16,6 @@ public class IslandBehaviour : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        onBoatEnter?.Invoke(this);
+        onBoatEnter?.Invoke(this, other.gameObject);
     }
 }

@@ -17,9 +17,12 @@ public class ScoreManager : MonoBehaviour
         deliveryManager.onDelivery -= ScoreUp;
     }
 
-    public void ScoreUp(int points)
+    public void ScoreUp(int points, GameObject other)
     {
-        score += points;
-        ScoreText.text = score.ToString();
+        if (other.GetComponent<PlayerBehaviour>())
+        {
+            score += points;
+            ScoreText.text = score.ToString();
+        }
     }
 }

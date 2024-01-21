@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 
 public class DeliveryManager : MonoBehaviour
 {
@@ -7,14 +10,20 @@ public class DeliveryManager : MonoBehaviour
 
     [SerializeField] private EnemyBehaviour[] enemyBehaviours;
 
-    [SerializeField] private IslandBehaviour destinationIsland;
+    public IslandBehaviour destinationIsland;
+
+    [SerializeField] private TextMeshProUGUI DestinationText;
+
     public int camenbertCount;
 
-    public delegate void OnDelivery(int camenbertCount);
+    public delegate void OnDelivery(int camenbertCount, GameObject other);
     public event OnDelivery onDelivery;
 
     public delegate void OnNewDestination(IslandBehaviour island);
     public event OnNewDestination onNewDestination;
+
+    public delegate void OnDestinationIsland(IslandBehaviour island);
+    public event OnDestinationIsland onDestinationIsland;
 
     public void Awake()
     {
@@ -50,10 +59,14 @@ public class DeliveryManager : MonoBehaviour
             destinationIsland = PickARandomIslandIn(islands);
         }
 
+        DestinationText.text = destinationIsland.cityName;    
+
         PickRandomNumberOfCamenbert();
+
         SetEnemiesDestination();
 
         onNewDestination?.Invoke(destinationIsland);
+        onDestinationIsland?.Invoke(destinationIsland);
     }
 
     private void SetEnemiesDestination()
@@ -74,11 +87,11 @@ public class DeliveryManager : MonoBehaviour
         camenbertCount = Random.Range(100, 500);
     }
 
-    private void CheckIfIslandIsDestinationOne(IslandBehaviour island)
+    private void CheckIfIslandIsDestinationOne(IslandBehaviour island, GameObject other)
     {
         if (island == destinationIsland)
         {
-            onDelivery?.Invoke(camenbertCount);
+            onDelivery?.Invoke(camenbertCount, other);
             ChooseIsland();
         }
     }
