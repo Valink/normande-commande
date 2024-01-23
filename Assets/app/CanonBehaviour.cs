@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 public class CanonBehaviour : MonoBehaviour
 {
-    [SerializeField] private int reach = 100;
+    [SerializeField] private int reach = 1000;
     [SerializeField] private int damage = 35;
     public Transform target;
     public GameObject smokePrefab;
@@ -34,7 +35,7 @@ public class CanonBehaviour : MonoBehaviour
         transform.rotation = rotationToTarget;
     }
 
-    private void Shoot()
+    public void Shoot()
     {
         Instantiate(smokePrefab, smokesContainer);
         Instantiate(ballPrefab, ballsContainer);
@@ -46,10 +47,15 @@ public class CanonBehaviour : MonoBehaviour
 
             var target = hit.transform.GetComponentInParent<HealthManager>();
 
-            if (target)
+            if (target && target.gameObject.name != "player")
             {
                 target.TakeDamage(damage);
             }
         }
+    }
+
+    internal void SetTarget(Transform target)
+    {
+        this.target = target;
     }
 }
